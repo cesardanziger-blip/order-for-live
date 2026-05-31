@@ -27,7 +27,7 @@ services:
     build:
       context: ./frontend/react-baby
       args:
-        VITE_API_URL: ${VITE_API_URL}
+        VITE_API_URL: http://18.224.82.190:8080/api
     container_name: orderforlive-web
     depends_on:
       - api
