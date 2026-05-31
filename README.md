@@ -2,6 +2,9 @@
 
 Projeto Full Stack para fins de teste desenvolvido com .NET 10 e React.
 
+## Versão
+v1.0.0
+
 ### Backend
 - .NET 10
 - Entity Framework Core
@@ -34,3 +37,4 @@ Swagger:
 http://localhost:5000/swagger
 
 ## Executar localmente
+=======
