@@ -20,7 +20,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_ENVIRONMENT: Production
       DB_CONNECTION: Host=db;Port=5432;Database=orderforlive;Username=postgres;Password=postgres
 
   frontend:

@@ -17,7 +17,7 @@ var corsOrigins = builder.Configuration
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("DefaultCors", policy =>
+    options.AddPolicy("AllowFrontend", policy =>
     {
         policy
             .WithOrigins(corsOrigins!)
@@ -63,8 +63,6 @@ var app = builder.Build();
 
 DbInitializer.MigrateDatabase(app);
 
-app.UseCors("DefaultCors");
-
 //if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 //{
 //    app.UseSwagger();
@@ -78,7 +76,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseCors("AllowAll");
+app.UseCors("AllowFrontend");
 
 app.MapControllers();
 
