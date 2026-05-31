@@ -1,23 +1,38 @@
 services:
+  db:
+    image: postgres:16
+    container_name: orderforlive-db
+    restart: always
+    environment:
+      POSTGRES_DB: orderforlive
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
   api:
     build:
       context: ./backend
+      dockerfile: OrderForLiveTest.API/Dockerfile
     container_name: orderforlive-api
-
+    depends_on:
+      - db
     ports:
       - "8080:8080"
-
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      DB_CONNECTION: Host=db;Port=5432;Database=orderforlive;Username=postgres;Password=postgres
 
   frontend:
     build:
       context: ./frontend/react-baby
-
+      args:
+        VITE_API_URL: ${VITE_API_URL}
     container_name: orderforlive-web
-
+    depends_on:
+      - api
     ports:
       - "3000:80"
 
-    depends_on:
-      - api
+volumes:
+  pgdata:

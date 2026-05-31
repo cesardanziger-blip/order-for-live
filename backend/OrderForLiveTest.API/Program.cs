@@ -11,12 +11,16 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var corsOrigins = builder.Configuration
+    .GetSection("Cors:Origins")
+    .Get<string[]>();
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("DefaultCors", policy =>
     {
         policy
-            .AllowAnyOrigin()
+            .WithOrigins(corsOrigins!)
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
@@ -37,13 +41,12 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(xmlPath);
 });
 
-var dbPath = Environment.GetEnvironmentVariable("DB_PATH")
-             ?? "orders.db";
-
-var connectionString = $"Data Source={dbPath}";
+var connectionString =
+    Environment.GetEnvironmentVariable("DB_CONNECTION")
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(connectionString));
+    options.UseNpgsql(connectionString));
 
 //builder.Services.AddDbContext<AppDbContext>(options =>
 //    options.UseSqlite(
@@ -56,17 +59,19 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateOrderValidator>();
 builder.Services.AddFluentValidationAutoValidation();
 
-
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
-}
+DbInitializer.MigrateDatabase(app);
+
+app.UseCors("DefaultCors");
+
+//if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
 
 app.UseSwagger();
-
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();

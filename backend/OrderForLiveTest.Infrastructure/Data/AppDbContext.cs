@@ -7,15 +7,5 @@ namespace OrderForLiveTest.Infrastructure.Data
     {
         public DbSet<Order> Orders => Set<Order>();
         public DbSet<OrderItem> OrderItems => Set<OrderItem>();
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
-
-            //modelBuilder.Entity<Order>()
-            //    .HasMany(x => x.Items)
-            //    .WithOne()
-            //    .HasForeignKey(x => x.OrderId);
-        }
     }
 }
