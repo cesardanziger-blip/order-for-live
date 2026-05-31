@@ -1,0 +1,22 @@
+# Visual Studio
+.vs/
+**/.vs/
+
+# Build .NET
+**/bin/
+**/obj/
+
+# React
+frontend/react-baby/node_modules/
+frontend/react-baby/dist/
+
+# Docker
+**/.dockerignore
+
+# Banco
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log

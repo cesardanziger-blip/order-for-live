@@ -1,0 +1,12 @@
+.table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}

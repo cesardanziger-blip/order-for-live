@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="OrderForLiveTest.API/OrderForLiveTest.API.csproj" />
+  <Project Path="OrderForLiveTest.Application/OrderForLiveTest.Application.csproj" />
+  <Project Path="OrderForLiveTest.Domain/OrderForLiveTest.Domain.csproj" />
+  <Project Path="OrderForLiveTest.InfraStructure/OrderForLiveTest.Infrastructure.csproj" />
+  <Project Path="OrderForLiveTest.Tests/OrderForLiveTest.Tests.csproj" />
+</Solution>
